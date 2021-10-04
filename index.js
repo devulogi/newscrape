@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
 
       res.status(200).json(articles);
     })
-    .catch(err => console.log(err));
+    .catch(err => res.status(500).json(err));
 });
 
 app.listen(3000, () => {
