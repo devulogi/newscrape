@@ -3,7 +3,8 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 
 const app = express();
-const url = 'https://www.rappler.com/';
+const url = 'https://www.rappler.com';
+const target = '.A__DefaultLink-sc-120nwt8-0';
 
 app.get('/', (req, res) => {
   axios(url)
@@ -12,13 +13,13 @@ app.get('/', (req, res) => {
       const $ = cheerio.load(html);
       const articles = [];
 
-      $('.A__DefaultLink-sc-120nwt8-0', html).each(function () {
+      $(target, html).each(function () {
         const title = $(this).find('h3').text();
-        const url = $(this).attr('href');
+        const uri = $(this).attr('href');
         if (title !== '') {
           articles.push({
-            article: title,
-            href: `https://www.rappler.com${url}`,
+            title,
+            href: `${url}${uri}`,
           });
         }
       });
